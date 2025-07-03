@@ -98,6 +98,8 @@ You are done!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+Troubleshooting Section Below – Try each fix step-by-step.
+
 If you get error like:
 ......connection refused?
 
@@ -177,6 +179,23 @@ Then paste token from Master Node.
 
             E.g.
             kubeadm join 172.31.44.207:6443 --token khxrkw.2vjy2dtoslz361bg --discovery-token-ca-cert-hash  sha256:df5912a1e607c435e5b1fef088a3cd187f90e6f489378d6c1ddeac09be3c0516 
+
+
+
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+Troubleshooting Section Below – Try each fix step-by-step.
+If you face any error, you can reset
+
+            sudo kubeadm reset -f
+            sudo systemctl stop kubelet
+            sudo systemctl stop docker
+            sudo rm -rf /etc/kubernetes /var/lib/etcd /var/lib/kubelet ~/.kube
+            sleep 5
+            sudo systemctl start docker
+            sudo systemctl start kubelet
+          
+And paste token again!!
+
 
 Again go to Master Node and run
             kubectl get nodes
