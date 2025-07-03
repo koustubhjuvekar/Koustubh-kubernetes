@@ -130,7 +130,17 @@ Try
 
 If still error...
 Try
-4)          (Copy same from line number 62 here, see above)
+4) 
+            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+            sudo chown $(id -u):$(id -g) $HOME/.kube/config
+           
+            sudo systemctl restart docker
+            sudo systemctl restart kubelet
+
+
+If still error...
+Try
+5)          (Copy same from line number 62 here, see above)
             
             mkdir -p $HOME/.kube
             sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
