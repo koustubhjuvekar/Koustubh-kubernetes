@@ -38,8 +38,8 @@ FOR MASTERNODE
 
             sudo swapoff -a
             sleep 5
-            sudo apt-get update
-            sudo apt-get upgrade
+            sudo apt-get update -y
+            sudo apt-get upgrade -y
             sudo apt-get install docker.io -y
             sudo systemctl start docker
             sudo systemctl enable docker
