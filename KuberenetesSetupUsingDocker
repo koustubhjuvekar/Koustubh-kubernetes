@@ -62,13 +62,13 @@ These are the commands: -->
             kubeadm init
 
 Then You will get this below given output in the end. Copy and  run in the same terminal (Master Node)
-To start using your cluster, you need to run the following as a regular user:
+"To start using your cluster, you need to run the following as a regular user:"
 
             mkdir -p $HOME/.kube
             sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
             sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-Alternatively, if you are the root user, you can run:
+"Alternatively, if you are the root user, you can run:"
 
             export KUBECONFIG=/etc/kubernetes/admin.conf
 
@@ -84,6 +84,12 @@ OR you will also get token already printed when you run "kubeadm init", in the e
 Copy this token and paste it in worker nodes, with sudo permission.
 
 Again in the master node:
+
+            kubectl get nodes
+
+You will see here list of nodes, but in "Not Ready" status.
+
+So now...
 
 Now here need to install calico plugin to establish proper network between cluster:
 You can go to https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises OR search on Google "install calico kubernetes" --> click on first link of Tigera "Calico Documentation" --> Click on "Manifest" --> Run commands. 
@@ -152,7 +158,18 @@ Try
             kubectl get nodes
 
 
+If you get error like: (Not Ready)
 
+NAME             STATUS       ROLES           AGE     VERSION
+master           Not Ready    control-plane   6h49m   v1.33.2
+worker1          Not Ready    <none>          5h56m   v1.33.2
+worker2          Not Ready    <none>          6h48m   v1.33.2
+
+Repeat commands on line number 93 94
+            curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
+            kubectl apply -f calico.yaml
+
+            kubectl get nodes
 
 
 
