@@ -13,11 +13,11 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sleep 5
-echo "**********************************************************************************************************************************************"
-echo "Paste here token taken from masternode."
-echo "**********************************************************************************************************************************************"
 sudo apt-get update
 sleep 5
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo systemctl enable --now kubelet
+echo "**********************************************************************************************************************************************"
+echo "Paste here token taken from masternode."
+echo "**********************************************************************************************************************************************"
