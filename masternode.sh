@@ -1,4 +1,4 @@
-sudo su
+# Do and run sudo su, as rootuser, and then execute .sh 
 sudo swapoff -a
 sleep 5
 sudo apt-get update
