@@ -20,7 +20,8 @@ Then launch 2 EC2 instances (minimum t3.small having 2 GB RAM and 2 CPUs)
 Now,
 open terminal/powershell.
 
-********************************************************** 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 FOR MASTERNODE 
 **********************************************************
             sudo hostnamectl set-hostname MasterNode
@@ -35,26 +36,85 @@ FOR MASTERNODE
 
 Go to https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ OR search on Google for "install kubeadm" --> click on official kubernetes link--> If you are using ubuntu (Go for Debian based steps) OR If you are using Amazon Linux (Go for Red hat based) --> Follow commands
 
+These are the commands: -->
             sudo apt-get install -y apt-transport-https ca-certificates curl gpg
             curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
             echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
-sudo systemctl enable --now kubelet
-sudo su
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
+            sudo systemctl enable --now kubelet
 
-kubeadm init
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+            sudo su
 
-export KUBECONFIG=/etc/kubernetes/admin.conf
+            kubeadm init
+
+Then You will get this output in the end. Copy and paste, run in the same terminal (Master Node)
+To start using your cluster, you need to run the following as a regular user:
+
+            mkdir -p $HOME/.kube
+            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+            sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+            export KUBECONFIG=/etc/kubernetes/admin.conf
+
+            kubectl get nodes
+
+Now here need to install calico plugin to establish proper network between cluster:
+You can go to https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises OR search on Google "install calico kubernetes" --> click on first link of Tigera "Calico Documentation" --> Click on "Manifest" --> Run commands. 
+
+These are the commands: 
+
+            curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
+            kubectl apply -f calico.yaml
+            kubectl get nodes
+
+You are done!!!!!!!!!!!!!!!!!!!!!!!!
 
 
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+If you get error like:
+......connection refused?
 
-kubectl get nodes
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
-kubectl apply -f calico.yaml
-kubectl get nodes
+Try 
+1)          sudo systemctl restart docker
+            sudo systemctl restart kubelet
+            sleep 5
+            kubectl get nodes
+
+If still error...
+Try
+2)          sudo systemctl stop kubelet
+            sudo systemctl stop docker
+            sleep 5
+            sudo systemctl start docker
+            sudo systemctl start kubelet
+            sleep 5
+            kubectl get nodes
+
+If still error...
+Try
+3)          sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
+            # (Just press Enter in a blank line, save & exit, do not change anything, just do and activity)
+            sudo systemctl restart docker
+            sudo systemctl restart kubelet
+            sleep 10
+            kubectl get nodes
+
+If still error...
+Try
+4)          (Copy same from line 56 here, see above)
+            
+            mkdir -p $HOME/.kube
+            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+            sudo chown $(id -u):$(id -g) $HOME/.kube/config
+            export KUBECONFIG=/etc/kubernetes/admin.conf
+            sudo systemctl restart docker
+            sudo systemctl restart kubelet
+            sleep 10
+            kubectl get nodes
+
+
