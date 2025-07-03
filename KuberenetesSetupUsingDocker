@@ -1,3 +1,5 @@
+*(You can refer PDFs also, same content but with images)
+__________________________________________________________
 Kuberenetes Setup on VMs
 We are using here AWS. 
 (I have also created .sh file named masternode.sh, you can execute that file by uploading to EC2 or you can create .sh file in EC2, copy paste all commands in file, change permission and execute file)
@@ -28,9 +30,9 @@ open terminal/powershell.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-########################################################################################################################################################################
+#######################################################################################################################
 FOR MASTERNODE 
-########################################################################################################################################################################
+#######################################################################################################################
             sudo hostnamectl set-hostname MasterNode
             exit
 
@@ -57,7 +59,7 @@ These are the commands: -->
 
             kubeadm init
 
-Then You will get this output in the end. Copy and paste, run in the same terminal (Master Node)
+Then You will get this below given output in the end. Copy and  run in the same terminal (Master Node)
 To start using your cluster, you need to run the following as a regular user:
 
             mkdir -p $HOME/.kube
@@ -70,6 +72,17 @@ Alternatively, if you are the root user, you can run:
 
             kubectl get nodes
 
+Now about token,
+You can print token here using following command :
+
+            kubeadm token create --print-join-command
+
+OR you will also get token already printed when you run "kubeadm init", in the end there will be a token.
+
+Copy this token and paste it in worker nodes, with sudo permission.
+
+Again in the master node:
+
 Now here need to install calico plugin to establish proper network between cluster:
 You can go to https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises OR search on Google "install calico kubernetes" --> click on first link of Tigera "Calico Documentation" --> Click on "Manifest" --> Run commands. 
 
@@ -78,14 +91,6 @@ These are the commands:
             curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
             kubectl apply -f calico.yaml
             kubectl get nodes
-
-You can print token here using following command OR you will also get token already printed when you run "kubeadm init", in the end there will be a token:
-
-            kubeadm token create --print-join-command
-
-
-Copy this token and paste it in worker nodes, with sudo permission.
-
 
 You are done!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -131,5 +136,56 @@ Try
             sudo systemctl restart kubelet
             sleep 10
             kubectl get nodes
+
+
+
+
+
+
+
+
+#######################################################################################################################
+FOR WORKERNODE
+#######################################################################################################################
+            sudo hostnamectl set-hostname WorkerNode1
+            exit
+
+            sudo apt-get update
+            sudo apt-get upgrade
+            sudo apt-get install docker.io -y
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo systemctl status docker
+
+Go to https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ OR search on Google for "install kubeadm" --> click on official kubernetes link--> If you are using ubuntu (Go for Debian based steps) OR If you are using Amazon Linux (Go for Red hat based) --> Follow commands
+
+These are the commands: -->
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
+            sudo systemctl enable --now kubelet
+
+Then paste token from Master Node.
+
+            E.g.
+            kubeadm join 172.31.44.207:6443 --token khxrkw.2vjy2dtoslz361bg --discovery-token-ca-cert-hash  sha256:df5912a1e607c435e5b1fef088a3cd187f90e6f489378d6c1ddeac09be3c0516 
+
+Again go to Master Node and run
+            kubectl get nodes
+
+#######################################################################################################################
+If you see output like 
+
+NAME             STATUS   ROLES           AGE     VERSION
+master           Ready    control-plane   6h49m   v1.33.2
+worker1          Ready    <none>          5h56m   v1.33.2
+worker2          Ready    <none>          6h48m   v1.33.2
+
+You are done completely!!!
+            
 
 
