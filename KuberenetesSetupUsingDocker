@@ -84,6 +84,9 @@ You can print token here using following command OR you will also get token alre
             kubeadm token create --print-join-command
 
 
+Copy this token and paste it in worker nodes, with sudo permission.
+
+
 You are done!!!!!!!!!!!!!!!!!!!!!!!!
 
 
