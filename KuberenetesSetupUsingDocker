@@ -36,6 +36,8 @@ FOR MASTERNODE
             sudo hostnamectl set-hostname MasterNode
             exit
 
+            sudo swapoff -a
+            sleep 5
             sudo apt-get update
             sudo apt-get upgrade
             sudo apt-get install docker.io -y
@@ -150,6 +152,8 @@ FOR WORKERNODE
             sudo hostnamectl set-hostname WorkerNode1
             exit
 
+            sudo swapoff -a
+            sleep 5
             sudo apt-get update
             sudo apt-get upgrade
             sudo apt-get install docker.io -y
