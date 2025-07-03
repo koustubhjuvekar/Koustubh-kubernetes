@@ -1,7 +1,13 @@
 Kuberenetes Setup on VMs
 We are using here AWS. 
+(I have also created .sh file named masternode.sh, you can execute that file by uploading to EC2 or you can create .sh file in EC2, copy paste all commands in file, change permission and execute file)
+This will directly install everything for you!!
 
-Create Security Group first (Give any name e.g. KubernetesSG):
+OR
+
+Go step by step as below:
+
+Create Security Group first (Give any name e.g. KubernetesSG): (Even you run .sh file and install everything, SG creation is must)
 Add these ports in inbound rules:
 
 | Port      | Protocol | Purpose                                  |
@@ -23,7 +29,7 @@ open terminal/powershell.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FOR MASTERNODE 
-**********************************************************
+**************************************************************************************************************************************************************************
             sudo hostnamectl set-hostname MasterNode
             exit
 
@@ -72,6 +78,8 @@ These are the commands:
             kubectl apply -f calico.yaml
             kubectl get nodes
 
+You can print token here using following command OR you will also get token already printed 
+
 You are done!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -106,7 +114,7 @@ Try
 
 If still error...
 Try
-4)          (Copy same from line 56 here, see above)
+4)          (Copy same from line number 62 here, see above)
             
             mkdir -p $HOME/.kube
             sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
