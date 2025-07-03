@@ -1,3 +1,4 @@
+sudo su
 sudo swapoff -a
 sleep 5
 sudo apt-get update
@@ -29,4 +30,6 @@ kubectl apply -f calico.yaml
 sleep 5
 
 kubeadm token create --print-join-command
-
+echo "**********************************************************************************************************************************************"
+echo "Master node setup complete! Paste above printed token in Worker nodes. Then come here and check for cluster. Run "'kubectl get nodes'""
+echo "**********************************************************************************************************************************************"
