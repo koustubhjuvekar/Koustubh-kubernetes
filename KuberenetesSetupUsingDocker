@@ -1,0 +1,60 @@
+Kuberenetes Setup on VMs
+We are using here AWS. 
+
+Create Security Group first (Give any name e.g. KubernetesSG):
+Add these ports in inbound rules:
+
+| Port      | Protocol | Purpose                                  |
+| --------- | -------- | ---------------------------------------- |
+| 22        | TCP      | SSH access (for remote login)            |
+| 80        | TCP      | HTTP                                     |
+| 6443      | TCP      | Kubernetes API Server (cluster control)  |
+| 10250     | TCP      | Kubelet API                              |
+| 10251     | TCP      | kube-scheduler                           |
+| 10252     | TCP      | kube-controller-manager                  |
+| 8080      | TCP      | alternative to HTTP                      |
+
+Then launch 2 EC2 instances (minimum t3.small having 2 GB RAM and 2 CPUs)
+  --> 1 For Master Node (Control PLane)
+  --> 1 (as many you want...) Worker Node
+Now,
+open terminal/powershell.
+
+********************************************************** 
+FOR MASTERNODE 
+**********************************************************
+            sudo hostnamectl set-hostname MasterNode
+            exit
+
+            sudo apt-get update
+            sudo apt-get upgrade
+            sudo apt-get install docker.io -y
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo systemctl status docker
+
+Go to https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ OR search on Google for "install kubeadm" --> click on official kubernetes link--> If you are using ubuntu (Go for Debian based steps) OR If you are using Amazon Linux (Go for Red hat based) --> Follow commands
+
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+sudo systemctl enable --now kubelet
+sudo su
+
+kubeadm init
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+
+
+kubectl get nodes
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+kubectl get nodes
