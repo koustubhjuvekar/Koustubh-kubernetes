@@ -60,6 +60,7 @@ These are the commands: -->
             sudo su
 
             kubeadm init
+      OR    sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 
 Then You will get this below given output in the end. Copy and  run in the same terminal (Master Node)
 "To start using your cluster, you need to run the following as a regular user:"
@@ -157,6 +158,14 @@ Try
             sleep 10
             kubectl get nodes
 
+If still error...
+Try
+6)  
+            (If this is a new setup and you never completed the kubeadm init, redo it:)
+            sudo kubeadm reset -f
+            sudo systemctl restart docker
+            sudo systemctl restart kubelet
+            sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 
 If you get error like: (Not Ready)
 
@@ -165,7 +174,7 @@ master           Not Ready    control-plane   6h49m   v1.33.2
 worker1          Not Ready    <none>          5h56m   v1.33.2
 worker2          Not Ready    <none>          6h48m   v1.33.2
 
-Repeat commands on line number 93 94
+Repeat commands on line number 100 101
             curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
             kubectl apply -f calico.yaml
 
