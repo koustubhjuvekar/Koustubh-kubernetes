@@ -128,8 +128,9 @@ Try
 
 If still error...
 Try
-3)          sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
-            # (Just press Enter in a blank line, save & exit, do not change anything, just do and activity)
+3)          # (Just press Enter in a blank line, save & exit, do not change anything, just do and activity)
+            sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
+            
             sudo systemctl restart docker
             sudo systemctl restart kubelet
             sleep 10
