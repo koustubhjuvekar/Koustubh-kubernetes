@@ -168,6 +168,30 @@ Try
             sudo systemctl restart kubelet
             sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 
+7) If you want to delete and reinstall calico then:
+            kubectl delete -f calico.yaml
+            sudo rm -rf /etc/cni/net.d/*
+            sudo rm -rf /var/lib/cni/
+            sudo rm -rf /var/log/calico
+            which calicoctl && sudo rm -f $(which calicoctl)
+
+            # Delete pods, CRDs, roles, bindings, etc.
+            kubectl delete daemonset,deploy,svc -n kube-system -l k8s-app=calico
+            kubectl delete crds $(kubectl get crds | grep calico | awk '{print $1}')
+
+  Check if it is uninstalled or not:
+            kubectl get pods -n kube-system | grep calico
+  If you see anything, forcefully remove:
+            kubectl delete pod <calico-kube-controllers-576865d959-v9m7v> -n kube-system --grace-period=0 --force
+
+
+  Reinstall calico:
+            curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
+            kubectl apply -f calico.yaml
+            kubectl get nodes
+
+
+
 If you get error like: (Not Ready)
 
 NAME             STATUS       ROLES           AGE     VERSION
