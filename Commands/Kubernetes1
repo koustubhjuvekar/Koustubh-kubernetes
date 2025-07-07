@@ -1,0 +1,13 @@
+#After creating nodes
+
+To Create pods:
+      kubectl run <pod-name> --image=<imagename>
+      kubectl run mypod --image=nginx
+
+To go inside pods:
+      kubectl exec -it <pod-name> --/bin/bash
+      kubectl exec -it mypod --/bin/bash
+
+To check nginx container inside pod:
+      curl localhost       -->  will run nginx html code of index 
+        
