@@ -4,7 +4,7 @@
 2. ClusterIP <br>
 3. Load Balancer <br>
 4. External Name <br><br>
-Explanation:
+Explanation:<br>
 1. Load Balancer accepts external requests to domain sbi.com.<br>
 2. Based on path (e.g., /login or /transaction), request forwarded to:<br>
    <t>NodePort 30001 → for login-service</t><br>
