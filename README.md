@@ -1,7 +1,7 @@
 <h1>Kubernetes</h1>
 <h2>Services in K8S:</h2>
-1. Nodeport
-2. ClusterIP
+1. Nodeport \n
+2. ClusterIP \n
 3. Load Balancer
 4. External Name
 
