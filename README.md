@@ -1,8 +1,8 @@
 <h1>Kubernetes</h1>
-<h2>Services in K8S:</h2>
-1. Nodeport 
+<h2>Services in K8S:</h2><br>
+1. Nodeport <br>
 2. ClusterIP <br>
-3. Load Balancer
-4. External Name
+3. Load Balancer <br>
+4. External Name <br><br>
 
 <img width="1200" height="535" alt="Services in Kubernetes Basic Diagram drawio (2)" src="https://github.com/user-attachments/assets/4082386d-add6-4f0e-8f2e-3650358e378c" />
