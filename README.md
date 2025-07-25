@@ -12,4 +12,7 @@ Explanation:<br>
 3. NodePort (same on all nodes) forwards request to respective ClusterIP Service.<br><br>
 4. ClusterIP Service uses label selectors to send request to any healthy Pod in the cluster, across nodes.<br><br>
 5. kube-proxy running on each node handles this internal routing.<br><br>
-<img width="1200" height="535" alt="Services in Kubernetes Basic Diagram drawio (2)" src="https://github.com/user-attachments/assets/4082386d-add6-4f0e-8f2e-3650358e378c" />
+<img width="1200" height="535" alt="Services in Kubernetes Basic Diagram drawio (2)" src="https://github.com/user-attachments/assets/4082386d-add6-4f0e-8f2e-3650358e378c" /> <br>
+
+
+<img width="1691" height="951" alt="K8S Architecture drawio" src="https://github.com/user-attachments/assets/686d58e7-2051-4059-8609-eee174440d05" />
