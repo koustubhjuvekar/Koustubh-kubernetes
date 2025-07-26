@@ -15,4 +15,5 @@ Explanation:<br>
 <img width="1200" height="535" alt="Services in Kubernetes Basic Diagram drawio (2)" src="https://github.com/user-attachments/assets/4082386d-add6-4f0e-8f2e-3650358e378c" /> <br>
 
 
-<img width="1691" height="951" alt="K8S Architecture drawio" src="https://github.com/user-attachments/assets/686d58e7-2051-4059-8609-eee174440d05" />
+
+<img width="1731" height="992" alt="K8S Architecture drawio" src="https://github.com/user-attachments/assets/2c44735a-5321-469d-b0ec-a173a82e4f73" />
