@@ -5,7 +5,7 @@
 3. Load Balancer <br>
 4. External Name <br><br>
 Explanation:<br>
-1. Load Balancer accepts external requests to domain sbi.com.<br><br>
+1. Load Balancer accepts external requests to domain sbi.com.<br><br>      
 2. Based on path (e.g., /login or /transaction), request forwarded to:<br><br>
    <t>NodePort 30001 → for login-service</t><br>
    <t>NodePort 30002 → for transaction-service</t><br><br>
